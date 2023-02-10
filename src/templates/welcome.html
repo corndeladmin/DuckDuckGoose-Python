@@ -1,0 +1,21 @@
+{% extends "layout/base.html" %}
+{% block content %}
+  <div class="card border-primary">
+    <div class="card-header bg-info border-primary">
+      <h1 class="fs-4 mb-0">Welcome to DuckDuckGoose.</h1>
+    </div>
+    <div class="card-body">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="mb-3">
+            {% for category, message in messages %}
+              <div class="text-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      <p>DuckDuckGoose is a platform where people can post brief thoughts and updates. These posts are known as honks.</p>
+      <a href="#" role="button" class="btn btn-primary">View some honks</a>
+    </div>
+  </div>
+{% endblock %}

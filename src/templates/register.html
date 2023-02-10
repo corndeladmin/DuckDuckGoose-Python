@@ -1,0 +1,41 @@
+{% extends "layout/base.html" %}
+{% block content %}
+  <div class="card border-primary">
+    <div class="card-header bg-info border-primary">
+      <h1 class="fs-4 mb-0">Welcome.</h1>
+    </div>
+    <div class="card-body">
+      <form method="post" class="mx-auto" style="max-width: 24rem;">
+        {{ form.csrf_token }}
+        <div class="mb-3">
+          {{ form.username.label(class="form-label") }}
+          {{ form.username(class="form-control text-center" + (" is-invalid" if form.username.errors else (" is-valid" if form.errors else ""))) }}
+          {% for error in form.username.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.password.label(class="form-label") }}
+          {{ form.password(class="form-control text-center" + (" is-invalid" if form.password.errors else (" is-valid" if form.errors else ""))) }}
+          {% for error in form.password.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="mb-4">
+          {{ form.confirm_password.label(class="form-label") }}
+          {{ form.confirm_password(class="form-control text-center" + (" is-invalid" if form.confirm_password.errors else (" is-valid" if form.errors else ""))) }}
+          {% for error in form.confirm_password.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+        </div>
+        {{ form.submit(class="btn btn-primary w-100 mb-3") }}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="text-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+      </form>
+      <small>Already have an account? <a href="{{ url_for('login') }}">Log in</a> instead</small>
+    </div>
+  </div>
+{% endblock %}

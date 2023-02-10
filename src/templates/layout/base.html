@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="DuckDuckGoose" />
+  <meta property="og:description" content="DuckDuckGoose is a platform where people can post brief thoughts and updates." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://duckduckgoose.onrender.com/" />
+  <meta property="og:image" content="{{ url_for('static', filename='images/android-chrome-512x512.png') }}" />
+  <title>DuckDuckGoose</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='manifests/site.webmanifest') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body style="background: url('{{ url_for('static', filename='images/background.png') }}') center / cover no-repeat fixed;">
+  {% include "layout/navbar.html" %}
+  <main class="mx-auto mb-5 p-3 text-center">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

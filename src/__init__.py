@@ -1,2 +1,5 @@
+from .app import app
+
+
 def main():
-    pass
+    app.run()
