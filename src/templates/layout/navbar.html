@@ -10,7 +10,7 @@
           <a role="button" class="btn btn-outline-light me-2 {{ request.endpoint }}" href="{{ url_for('login') }}">Log in</a>
           <a role="button" class="btn btn-outline-light" href="{{ url_for('register') }}">Register</a>
         {% else %}
-          <a role="button" class="btn btn-outline-light me-2" href="#">My page</a>
+          <a role="button" class="btn btn-outline-light me-2" href="{{ url_for('user', user_id=current_user.id) }}">My page</a>
           <form method="post" action="{{ url_for('logout') }}" class="d-inline-block">
             <button type="submit" class="btn btn-outline-light">Log out</button>
           </form>

@@ -1,0 +1,45 @@
+{% extends "layout/base.html" %}
+{% block content %}
+  <div class="bg-info border-top border-start border-end border-primary rounded-top p-2">
+    <h1 class="fs-4 mb-0">{{ 'My honks' if current_user.is_authenticated and user.id == current_user.id else 'Honks by @' + user.username }}</h1>
+  </div>
+  <form method="get" class="mb-3">
+    <div class="input-group">
+      <input class="form-control text-center" name="search" id="search" placeholder="Search honks" aria-label="Search honks"
+             value="{{ search or '' }}" style="padding-left: 3.375rem; border-top-left-radius: 0;">
+      <button class="btn btn-primary" type="submit" aria-label="Search" style="width: 2.625rem; border-top-right-radius: 0;"><i class="bi bi-search"></i></button>
+    </div>
+  </form>
+  <div class="card bg-info border-primary">
+    <div class="card-body">
+      {% if user_honks.total > 0 %}
+        {% for honk in user_honks %}
+          <div class="card text-start mb-3">
+            <div class="card-body">
+              <h5 class="card-title">
+                @{{ user.username }}
+                <span class="text-muted">&bullet; {{ honk.timestamp.strftime('%d %b %Y') }}</span>
+              </h5>
+              <p class="card-text">{{ honk.content }}</p>
+            </div>
+          </div>
+        {% endfor %}
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center mb-0">
+            {% for page in user_honks.iter_pages(left_current=1, right_current=1) %}
+              {% if page %}
+                <li class="page-item {{ 'active' if page == user_honks.page else '' }}">
+                  <a href="{{ url_for('user', user_id=user.id, search=search, page=page) if search else url_for('user', user_id=user.id, page=page) }}" class="page-link">{{ page }}</a>
+                </li>
+              {% else %}
+                <li class="page-item"><span class="page-link">&ctdot;</span></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+      {% else %}
+        <p class="card-text">No honks to show.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
