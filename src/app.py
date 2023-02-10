@@ -2,16 +2,20 @@ from dotenv import find_dotenv, load_dotenv
 import os
 
 from flask import Flask, flash, redirect, url_for, render_template
-from flask_login import LoginManager, current_user, login_user, logout_user
+from flask_login import LoginManager, current_user, login_required, login_user, logout_user
+
+from sqlalchemy.exc import IntegrityError
 
 from .helpers.flask_login_extensions import logout_required
 
 from .db import db, bcrypt
 
+from src.forms.honk_form import HonkForm
 from src.forms.login_form import LoginForm
 from src.forms.registration_form import RegistrationForm
 
 from src.models.user import User
+from src.models.honk import Honk
 
 load_dotenv(find_dotenv('.env.development'))
 
@@ -40,6 +44,21 @@ def user_loader(user_id):
 @app.route('/')
 def welcome():
     return render_template('welcome.html')
+
+
+@app.route('/honk', methods=['GET', 'POST'])
+@login_required
+def honk():
+    form = HonkForm()
+    if form.validate_on_submit():
+        try:
+            new_honk = Honk(user_id=current_user.id, content=form.content.data)
+            db.session.add(new_honk)
+            flash('Honk posted successfully.', 'success')
+            return redirect(url_for('honks'))
+        except IntegrityError:
+            return redirect(url_for('honk'))
+    return render_template('honk.html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
