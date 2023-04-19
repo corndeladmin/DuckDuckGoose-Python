@@ -1,0 +1,54 @@
+{% extends "layout/base.html" %}
+{% block content %}
+  <h1 class="fs-4 bg-info border-top border-start border-end border-primary rounded-top mb-0 p-2">Find people you know.</h1>
+  <form method="get" class="mb-3">
+    <div class="input-group">
+      {% if filter %}
+        <input type="hidden" name="filter" value="{{ filter }}">
+      {% endif %}
+      <input class="form-control text-center" name="search" id="search" placeholder="Search users" aria-label="Search users"
+             value="{{ search or '' }}" style="padding-left: 3.375rem; border-top-left-radius: 0;">
+      <button class="btn btn-primary" type="submit" aria-label="Search" style="width: 2.625rem; border-top-right-radius: 0;"><i class="bi bi-search"></i></button>
+    </div>
+  </form>
+  <nav class="nav nav-pills nav-justified">
+    <a class="nav-link rounded-0 rounded-top {{ 'active' if filter != 'followed_users' else '' }}"
+       {{ 'aria-current="page"' if filter != 'followed_users' else '' }}
+       href="{{ url_for('users', search=search) if search else url_for('users') }}">Everyone</a>
+    <a class="nav-link rounded-0 rounded-top {{ 'active' if filter == 'followed_users' else '' }}"
+       {{ 'aria-current="page"' if filter == 'followed_users' else '' }}
+       href="{{ url_for('users', filter='followed_users', search=search) if search else url_for('users', filter='followed_users') }}">People I follow</a>
+  </nav>
+  <div class="card bg-info border-primary rounded-0 rounded-bottom">
+    <div class="card-body">
+      {% if users.total > 0 %}
+        {% for user in users %}
+          <div class="card text-start mb-3">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{{ url_for('user', user_id=user.id) }}" class="text-decoration-none">@{{ user.username }}</a></h5>
+              <p class="card-text">
+                {{ user.follower_users.all()|length }} follower{{ '' if user.follower_users.all()|length == 1 else 's' }}
+                &bullet;
+                {{ user.honks.all()|length }} honk{{ '' if user.honks.all()|length == 1 else 's' }}</p>
+            </div>
+          </div>
+        {% endfor %}
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center mb-0">
+            {% for page in users.iter_pages(left_current=1, right_current=1) %}
+              {% if page %}
+                <li class="page-item {{ 'active' if page == users.page else '' }}">
+                  <a href="{{ url_for('users', filter=filter, search=search, page=page) if search else url_for('users', filter=filter, page=page) }}" class="page-link">{{ page }}</a>
+                </li>
+              {% else %}
+                <li class="page-item"><span class="page-link">&ctdot;</span></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+      {% else %}
+        <p class="card-text">No users to show.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

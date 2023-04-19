@@ -1,7 +1,7 @@
 <div class="fixed-top">
   <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid justify-content-between">
-      <a class="navbar-brand d-flex align-items-center" href="#">
+      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('honks') }}">
         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" width="48" height="48" style="margin: -12px 0 -12px -6px;">
         DuckDuckGoose
       </a>
@@ -10,7 +10,7 @@
           <a role="button" class="btn btn-outline-light me-2 {{ request.endpoint }}" href="{{ url_for('login') }}">Log in</a>
           <a role="button" class="btn btn-outline-light" href="{{ url_for('register') }}">Register</a>
         {% else %}
-          <a role="button" class="btn btn-outline-light me-2" href="#">My page</a>
+          <a role="button" class="btn btn-outline-light me-2" href="{{ url_for('user', user_id=current_user.id) }}">My page</a>
           <form method="post" action="{{ url_for('logout') }}" class="d-inline-block">
             <button type="submit" class="btn btn-outline-light">Log out</button>
           </form>
@@ -20,9 +20,9 @@
   </nav>
   <nav class="navbar navbar-expand-lg bg-light shadow">
     <div class="container-fluid justify-content-start">
-      <a class="btn btn-outline-primary btn-sm me-2" href="#">Honks</a>
-      <a class="btn btn-outline-primary btn-sm me-2" href="#">Users</a>
-      <a class="btn btn-outline-primary btn-sm" href="#">Post a honk</a>
+      <a class="btn btn-outline-primary btn-sm me-2" href="{{ url_for('honks') }}">Honks</a>
+      <a class="btn btn-outline-primary btn-sm me-2" href="{{ url_for('users') }}">Users</a>
+      <a class="btn btn-outline-primary btn-sm" href="{{ url_for('honk') }}">Post a honk</a>
     </div>
   </nav>
 </div>
