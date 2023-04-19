@@ -1,7 +1,7 @@
 from dotenv import find_dotenv, load_dotenv
 import os
 
-from flask import Flask, flash, redirect, url_for, render_template
+from flask import Flask, request, flash, redirect, url_for, render_template
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 from .helpers.flask_login_extensions import logout_required
@@ -12,6 +12,7 @@ from src.forms.login_form import LoginForm
 from src.forms.registration_form import RegistrationForm
 
 from src.models.user import User
+from src.models.honk import Honk
 
 load_dotenv(find_dotenv('.env.development'))
 
@@ -40,6 +41,15 @@ def user_loader(user_id):
 @app.route('/')
 def welcome():
     return render_template('welcome.html')
+
+
+@app.route('/honks')
+def honks():
+    honks_query = Honk.query
+    if request.args.get('search'):
+        honks_query = honks_query.filter(Honk.content.ilike('%' + request.args['search'] + '%'))
+    matching_honks = db.paginate(honks_query.order_by(Honk.timestamp.desc()), per_page=5)
+    return render_template('honks.html', honks=matching_honks, search=request.args.get('search'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
