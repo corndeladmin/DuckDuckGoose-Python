@@ -1,7 +1,7 @@
 from dotenv import find_dotenv, load_dotenv
 import os
 
-from flask import Flask, flash, redirect, url_for, render_template
+from flask import Flask, request, flash, redirect, url_for, render_template
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 from .helpers.flask_login_extensions import logout_required
@@ -40,6 +40,15 @@ def user_loader(user_id):
 @app.route('/')
 def welcome():
     return render_template('welcome.html')
+
+
+@app.route('/users')
+def users():
+    users_query = User.query
+    if 'search' in request.args:
+        users_query = users_query.filter(User.username.ilike('%' + request.args['search'] + '%'))
+    matching_users = db.paginate(users_query.order_by(User.username), per_page=5)
+    return render_template('users.html', users=matching_users, search=request.args.get('search'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
