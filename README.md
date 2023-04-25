@@ -1,8 +1,6 @@
 # Exercise Name
 
-1. Fork this repo
-    * Go to this repo's GitHub page ({url here})
-    * Click `Fork` in the top-right of the page - this will create a copy of this repo in **your own GitHub account**
+1. Fork this repo: click `Fork` in the top-right of the page - this will create a copy of this repo in **your own GitHub account**
 
 2. Clone (download) the repo
     * Go to your newly-created fork of the repo (on GitHub).
@@ -12,7 +10,7 @@
     Your trainer will able to help you with this.
 
 3. "Cloning the repo" will create a folder on your computer with the files from this repo.  
-Open this folder in IntelliJ / Visual Studio Code.
+Open this folder in Visual Studio Code.
 
 4. Open a command-prompt in this same folder.  
 Your trainer can show you how to do this, if you need any help.
