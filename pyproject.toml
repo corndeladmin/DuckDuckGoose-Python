@@ -25,6 +25,9 @@ typing-extensions = "^4.4.0"
 [tool.poetry.scripts]
 start = "src:main"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
