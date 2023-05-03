@@ -2,7 +2,7 @@
 name = "exercise-template"
 version = "0.1.0"
 description = ""
-authors = ["Zachary Freed <zachary.freed@softwire.com>"]
+authors = []
 readme = "README.md"
 packages = [
   {include = "src"}
