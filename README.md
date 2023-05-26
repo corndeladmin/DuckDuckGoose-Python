@@ -1,4 +1,4 @@
-# Exercise Name
+# DuckDuckGoose
 
 1. Fork this repo: click `Fork` in the top-right of the page - this will create a copy of this repo in **your own GitHub account**
 
